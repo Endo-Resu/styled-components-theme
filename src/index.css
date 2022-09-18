@@ -15,6 +15,11 @@ a {
     color: initial;
 }
 
+input {
+    border: none;
+    outline: none;
+}
+
 :root {
     --family: 'Nunito Sans', sans-serif;
     --fs-sm: 14px;
