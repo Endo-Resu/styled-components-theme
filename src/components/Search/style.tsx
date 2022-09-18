@@ -21,6 +21,6 @@ export const Input = styled.input.attrs({
     placeholder: 'Search for a county...'
 })`
   margin-left: 2rem;
-  background-color: transparent;
   color: var(--colors-text);
+  background-color: var(--colors-ui-base);
 `;
