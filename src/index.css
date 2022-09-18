@@ -3,6 +3,16 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+}
+
+*:not(svg) {
+    transition: 0.5s ease-in-out;
+}
+
+a {
+    text-decoration: none;
+    color: initial;
 }
 
 :root {
@@ -29,7 +39,6 @@ body[data-theme='light'] {
 }
 
 body {
-    margin: 0;
     font-family: var(--family);
     color: var(--colors-text);
     font-weight: var(--fw-light);
