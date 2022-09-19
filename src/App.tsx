@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
-import Controls from "./components/Controls/Controls";
-import {ALL_COUNTRIES} from "./axios/config";
-import axios from "axios";
-import List from "./components/List/List";
-import Card from "./components/Card/Card";
+import {Route, Routes} from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
+import NotFound from "./pages/NotFound/NotFound";
+import Detail from "./pages/Detail/Detail";
 
 interface ICountry {
     name: string;
@@ -18,49 +17,24 @@ interface ICountry {
 function App() {
     const [countries, setCountries] = useState<ICountry[]>([]);
 
-    useEffect(() => {
-        fetchCountries()
-    }, [])
-
-    async function fetchCountries() {
-        try {
-            await axios.get<ICountry[]>(ALL_COUNTRIES)
-                .then(({data}) => setCountries(data))
-        } catch (e) {
-            alert(e)
-        }
-    }
-
     return (
         <>
             <Header/>
             <Main>
-                <Controls />
-                <List>
-                    {
-                        countries.map((country) => (
-                            <Card
-                                key={country.name}
-                                img={country.flag}
-                                name={country.name}
-                                info={[
-                                    {
-                                        title: 'Population',
-                                        description: country.population.toLocaleString(),
-                                    },
-                                    {
-                                        title: 'Region',
-                                        description: country.region,
-                                    },
-                                    {
-                                        title: 'Capital',
-                                        description: country.capital,
-                                    },
-                                ]}
-                            />
-                        ))
-                    }
-                </List>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={<HomePage countries={countries} setCountries={setCountries} />}
+                    />
+                    <Route
+                        path="/country/:name"
+                        element={<Detail />}
+                    />
+                    <Route
+                        path="*"
+                        element={<NotFound />}
+                    />
+                </Routes>
             </Main>
         </>
     );
