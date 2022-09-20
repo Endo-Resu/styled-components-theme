@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction, useEffect} from 'react';
+import React, {Dispatch, FC, SetStateAction, useEffect, useState} from 'react';
 import Controls from "../../components/Controls/Controls";
 import List from "../../components/List/List";
 import Card from "../../components/Card/Card";
@@ -20,6 +20,9 @@ interface HomePageProps {
 }
 
 const HomePage: FC<HomePageProps> = ({countries, setCountries}) => {
+    const [filteredCountries, setFilteredCountries] = useState<ICountry[]>(countries);
+
+    let navigate = useNavigate();
 
     useEffect(() => {
         fetchCountries()
@@ -36,14 +39,26 @@ const HomePage: FC<HomePageProps> = ({countries, setCountries}) => {
         }
     }
 
-    let navigate = useNavigate();
+    const handleSearch = (search?: string, region?: string) => {
+        let data = [...countries];
+
+        if (region) {
+            data = data.filter(country => country.region.includes(region))
+        }
+
+        if (search) {
+            data = data.filter(country => country.name.toLowerCase().includes(search.toLowerCase()))
+        }
+
+        setFilteredCountries(data)
+    }
 
     return (
         <>
-            <Controls />
+            <Controls onSearch={handleSearch} />
             <List>
                 {
-                    countries.map((country) => (
+                    filteredCountries.map((country) => (
                         <Card
                             key={country.name}
                             img={country.flag}
