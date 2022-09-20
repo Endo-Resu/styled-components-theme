@@ -53,6 +53,10 @@ const HomePage: FC<HomePageProps> = ({countries, setCountries}) => {
         setFilteredCountries(data)
     }
 
+    useEffect(() => {
+        fetchCountries()
+    }, [countries])
+
     return (
         <>
             <Controls onSearch={handleSearch} />
